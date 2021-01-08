@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{asset('assets')}}/bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets')}}/dist/css/AdminLTE.min.css">
+     <!-- DataTables -->
+  <link rel="stylesheet" href="{{asset('assets')}}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{asset('assets')}}/dist/css/skins/_all-skins.min.css">
@@ -75,6 +77,9 @@
     <script src="{{asset('assets')}}/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
     <script src="{{asset('assets')}}/bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- DataTables -->
+<script src="{{asset('assets')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('assets')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('assets')}}/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
@@ -84,6 +89,7 @@
             $('.sidebar-menu').tree()
         })
     </script>
+    @yield('js')
 </body>
 
 </html>

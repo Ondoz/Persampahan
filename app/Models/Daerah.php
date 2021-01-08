@@ -8,17 +8,20 @@ use Ramsey\Uuid\Uuid;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class kategori extends Model
+class Daerah extends Model
 {
     use HasFactory, HasSlug;
 
     protected $fillable = [
         'uuid',
-        'nama',
-        'status',
+        'name',
         'slug',
+        'status'
     ];
 
+    /**
+     * Get the options for generating the slug.
+     */
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -34,7 +37,7 @@ class kategori extends Model
         });
     }
 
-    public function persampahan()
+    public function persamapahan()
     {
         return $this->hasOne(persampahan::class);
     }

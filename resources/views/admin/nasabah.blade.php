@@ -9,28 +9,37 @@
             </div>
             <div class="box-header">
                 <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-default">
-                    Add Kategori
+                    Add nasabah
                 </button>
             </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="kategori-table" class="table table-bordered table-striped">
+          <table id="nasabah-table" class="table table-bordered table-striped">
             <thead>
             <tr>
               <th>#</th>
-              <th>Nama</th>
-              <th>Slug</th>
+              <th>Nama Nasabah</th>
+              <th>TTL</th>
+              <th>Alamat</th>
+              <th>Jumlah Saldo</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
             </thead>
             <tbody>
                 <?php $i= 1?>
-                @forelse ($kategori as $item)
+                @forelse ($nasabah as $item)
                     <tr>
                         <td>{{$i++}}</td>
-                        <td>{{ucfirst($item->nama)}}</td>
-                        <td>{{$item->slug}}</td>
+                        <td><a href="{{route('nasabah.datatransaksi', ['nasabah' => $item->id])}}">{{ucfirst($item->name)}}</a></td>
+                        @if ($item->userdetails != null)
+                            <td>{{$item->userdetails->ttl}}</td>
+                            <td>{{$item->userdetails->address}}</td>
+                        @else
+                            <td>-</td>
+                            <td>-</td>
+                        @endif
+                        <td>Rp. {{number_format($item->datatransaksi->sum('saldo'))}}</td>
                         <td>
                             @if ($item->status === 1)
                                 Aktif
@@ -39,14 +48,14 @@
                             @endif
                         </td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm editkategori" data-toggle="modal" data-target="#modaledit" data-uuid="{{ $item->uuid }}">Edit</button>
-                            <a href="{{route('kategori')}}" type="button" class="btn btn-danger btn-sm deletekategori" onclick='alert("I am an alert box!");' data-id="{{ $item->id }}">Hapus</a>
+                            <button type="button" class="btn btn-primary btn-sm editnasabah" data-toggle="modal" data-target="#modaledit" data-id="{{ $item->id }}">Edit</button>
+                            <a href="{{route('nasabah')}}" type="button" class="btn btn-danger btn-sm deletenasabah" onclick='alert("I am an alert box!");' data-id="{{ $item->id }}">Hapus</a>
                         </td>
                     </tr>
 
                 @empty
                     <tr>
-                        <td class="text-center" colspan="4">
+                        <td class="text-center" colspan="6">
                             tidak ada data
                         </td>
                     </tr>
@@ -67,14 +76,26 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Add Kategori</h4>
+          <h4 class="modal-title">Add Nasabah</h4>
         </div>
-        <form action="{{route('kategori.store')}}"  method="POST">
+        <form action="{{route('nasabah.store')}}"  method="POST">
             @csrf
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="namaketegori">Nama Kategori</label>
-                    <input type="text" class="form-control" id="namaketegori" name="nama" placeholder="Nama Kategori" required>
+                    <label for="namaketegori">Nama Nasabah</label>
+                    <input type="text" class="form-control"  name="name" placeholder="Nama Nasabah" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Nasabah</label>
+                    <input type="text" class="form-control"  name="email" placeholder="Email Nasabah" required>
+                </div>
+                <div class="form-group">
+                    <label for="ttl">TTL Nasabah</label>
+                    <input type="date" class="form-control"  name="ttl" placeholder="TTL Nasabah" required>
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat Nasabah</label>
+                    <input type="text" class="form-control"  name="alamat" placeholder="Alamat Nasabah" required>
                 </div>
                 <div class="form-group">
                     <div class="form-group" >
@@ -102,16 +123,28 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Edit Kategori</h4>
+          <h4 class="modal-title">Edit Nasabah</h4>
         </div>
-        <form action="{{route('kategori.update')}}"  method="POST">
+        <form action="{{route('nasabah.update')}}"  method="POST">
             @csrf
             {{-- {{ method_field('PATCH') }} --}}
             <input type="hidden" value="" name="id" id="id">
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="namaketegori">Nama Kategori</label>
-                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Kategori" required>
+                    <label for="nama">Nama Nasabah</label>
+                    <input type="text" class="form-control" id="nama" name="name" placeholder="Nama Nasabah" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Nasabah</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email Nasabah" required>
+                </div>
+                <div class="form-group">
+                    <label for="ttl">TTL Nasabah</label>
+                    <input type="date" class="form-control" id="ttl" name="ttl" placeholder="TTL Nasabah" required>
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat Nasabah</label>
+                    <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat Nasabah" required>
                 </div>
                 <div class="form-group">
                     <div class="form-group" >
@@ -137,34 +170,37 @@
 @section('js')
 <script>
     $(function () {
-        $('#kategori-table').DataTable()
+        $('#nasabah-table').DataTable()
       });
 
-      $('.editkategori').click( function(){
-            var $uuid = $(this).attr('data-uuid');
+      $('.editnasabah').click( function(){
+            var $id = $(this).attr('data-id');
             $.ajax({
             type: "POST",
-            url: "{{route('ajax_kategories')}}",
+            url: "{{route('ajax_nasabah')}}",
             data: {
                 _token: '{{csrf_token()}}',
-                uuid: $uuid
+                id: $id
             },
             dataType: "JSON",
             success: function (data) {
+            console.log(data);
                     $('#id').val(data.id);
-                    $('#nama').val(data.nama);
+                    $('#nama').val(data.name);
+                    $('#email').val(data.email);
+                    $('#ttl').val(data.userdetails.ttl);
+                    $('#alamat').val(data.userdetails.address);
                     $('#status').val(data.status);
                 }
             });
         });
 
-        $('.deletekategori').click(function(){
+        $('.deletenasabah').click(function(){
             var $id = $(this).attr('data-id');
-            // console.log($id);
 
             $.ajax({
                 type: "POST",
-                url: "{{route('kategori.delete')}}",
+                url: "{{route('nasabah.delete')}}",
                 data: {
                     _token: '{{csrf_token()}}',
                     id: $id
@@ -174,6 +210,8 @@
                 }
             })
         });
+
+
 
 </script>
 @endsection

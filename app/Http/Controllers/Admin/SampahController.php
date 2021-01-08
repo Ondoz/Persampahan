@@ -3,27 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kategori;
+use App\Models\Sampah;
 use Illuminate\Http\Request;
 
-class KategoriController extends Controller
+class SampahController extends Controller
 {
     public function index()
     {
-        $kategori = Kategori::all();
-        return view('admin.kategoris', compact('kategori'));
+        $sampah = sampah::all();
+        return view('admin.sampah', compact('sampah'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required',
-            'status' => 'required'
+            'harga' => 'required'
         ]);
 
-        Kategori::create([
+        Sampah::create([
             'nama' => $request->nama,
-            'status' => $request->status
+            'harga' => $request->harga
         ]);
 
         return back();
@@ -31,21 +31,21 @@ class KategoriController extends Controller
 
     public function editajax(Request $request)
     {
-        $kategori = Kategori::where('uuid', $request->uuid)->first();
-        return $kategori;
+        $sampah = Sampah::where('uuid', $request->uuid)->first();
+        return $sampah;
     }
 
     public function update(Request $request)
     {
-        $kategori = Kategori::where('id', $request->id)->first();
+        $sampah = Sampah::where('id', $request->id)->first();
         $request->validate([
             'nama' => 'required',
-            'status' => 'required'
+            'harga' => 'required'
         ]);
 
-        $kategori->update([
+        $sampah->update([
             'nama' => $request->nama,
-            'status' => $request->status
+            'harga' => $request->harga
         ]);
 
         return back();
@@ -53,9 +53,9 @@ class KategoriController extends Controller
 
     public function destroy(Request $request)
     {
-        $kategori = Kategori::where('id', $request->id)->first();
-        $kategori->delete();
+        $sampah = Sampah::where('id', $request->id)->first();
+        $sampah->delete();
         return back();
-        // return $kategori;
+        // return $sampah;
     }
 }

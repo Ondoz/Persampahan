@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class persampahan extends Model
+class Persampahan extends Model
 {
     use HasFactory;
 
@@ -30,10 +30,5 @@ class persampahan extends Model
     public function saran()
     {
         return $this->belongsToMany(saran::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

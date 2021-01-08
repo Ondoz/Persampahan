@@ -11,18 +11,23 @@
                 </a>
             </li>
             <li class="{{request()->is('admin/persampahan') ? 'active' : ''}}">
-                <a href="widgets.html">
-                    <i class="fa fa-dashboard"></i> <span>Persampahan</span>
+                <a href="{{route('sampah')}}">
+                    <i class="fa fa-trash"></i> <span>Sampah</span>
+                </a>
+            </li>
+            <li class="{{request()->is('admin/nasabah') ? 'active' : ''}}">
+                <a href="{{route('nasabah')}}">
+                    <i class="fa fa-laptop"></i> <span>Nasabah</span>
                 </a>
             </li>
             <li class="{{request()->is('admin/kategori') ? 'active' : ''}}">
                 <a href="{{route('kategori')}}">
-                    <i class="fa fa-dashboard"></i> <span>Kategori</span>
+                    <i class="fa fa-edit"></i><span>Kategori Sampah</span>
                 </a>
             </li>
             <li class="{{request()->is('admin/daerah') ? 'active' : ''}}">
                 <a href="{{route('daerah')}}">
-                    <i class="fa fa-dashboard"></i> <span>Daerah</span>
+                    <i class="fa fa-home"></i> <span>Daerah </span>
                 </a>
             </li>
         </ul>

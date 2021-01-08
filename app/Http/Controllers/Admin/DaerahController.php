@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Daerah;
 use Illuminate\Http\Request;
 
 class DaerahController extends Controller
@@ -14,72 +15,53 @@ class DaerahController extends Controller
      */
     public function index()
     {
-        return view('admin.daerah');
+        $daerah = Daerah::all();
+        return view('admin.daerah', compact('daerah'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'status' => 'required'
+        ]);
+
+        Daerah::create([
+            'name' => $request->name,
+            'status' => $request->status
+        ]);
+
+        return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+
+    public function editajax(Request $request)
     {
-        //
+        $daerah = Daerah::where('uuid', $request->uuid)->first();
+        return $daerah;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(Request $request)
     {
-        //
+        $daerah = Daerah::where('id', $request->id)->first();
+        $request->validate([
+            'name' => 'required',
+            'status' => 'required'
+        ]);
+
+        $daerah->update([
+            'name' => $request->name,
+            'status' => $request->status
+        ]);
+
+        return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    function destroy(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $daerah = Daerah::where('id', $request->id)->first();
+        $daerah->delete();
+        return back();
     }
 }

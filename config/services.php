@@ -30,4 +30,16 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_CALLBACK'),
+    ],
+
+    'github' => [
+        'client_id' => '3d4bc75b3ae0cdea466b',
+        'client_secret' => 'b5a5560068d24f51443575235132cd92ff590c33',
+        'redirect' => 'http://persampahan.test/github/callback',
+    ],
+
 ];

@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -41,13 +42,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function persampahan()
+    public function userdetails()
     {
-        return $this->hasMany(persampahan::class);
+        return $this->hasOne(UserDetails::class);
     }
 
-    public function saran()
+    public function datatransaksi()
     {
-        return $this->hasMany(saran::class);
+        return $this->hasMany(DataTransaksiNasabah::class);
     }
 }

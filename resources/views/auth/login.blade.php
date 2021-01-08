@@ -53,6 +53,14 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
+                                <div class="col-md-6 d-flex">
+                                    <a href="{{ route('login.provider', 'google') }}" style="border-radius: 5px;  margin-bottom: 10px;"  class="btn btn-block btn-outline-secondary  btn-xs "><img src="https://img.icons8.com/color/20/000000/google-logo.png"/>
+                                        {{ __(' Google') }}</a>
+                                    </div>
+                                    <div class="col-md-6 d-flex">
+                                    <a href="{{ route('login.provider', 'github') }}" style="border-radius: 5px;margin-bottom: 10px;"  class="btn btn-block btn-outline-secondary btn-xs"><img src="https://img.icons8.com/ios-glyphs/20/000000/github.png"/>
+                                            {{ __(' GitHub') }}</a>
+                                </div>
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>

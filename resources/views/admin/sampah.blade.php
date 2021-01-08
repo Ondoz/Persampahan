@@ -9,38 +9,32 @@
             </div>
             <div class="box-header">
                 <button type="button" class="btn btn-default mb-3" data-toggle="modal" data-target="#modal-default">
-                    Add Kategori
+                    Add Sampah
                 </button>
             </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <table id="kategori-table" class="table table-bordered table-striped">
+          <table id="sampah-table" class="table table-bordered table-striped">
             <thead>
             <tr>
               <th>#</th>
               <th>Nama</th>
-              <th>Slug</th>
-              <th>Status</th>
+              <th>Harga</th>
+              <th>Satuan</th>
               <th>Action</th>
             </tr>
             </thead>
             <tbody>
                 <?php $i= 1?>
-                @forelse ($kategori as $item)
+                @forelse ($sampah as $item)
                     <tr>
                         <td>{{$i++}}</td>
                         <td>{{ucfirst($item->nama)}}</td>
-                        <td>{{$item->slug}}</td>
+                        <td>Rp. {{$item->harga}}</td>
+                        <td>{{$item->satuan}}</td>
                         <td>
-                            @if ($item->status === 1)
-                                Aktif
-                            @else
-                                Tidak Aktif
-                            @endif
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm editkategori" data-toggle="modal" data-target="#modaledit" data-uuid="{{ $item->uuid }}">Edit</button>
-                            <a href="{{route('kategori')}}" type="button" class="btn btn-danger btn-sm deletekategori" onclick='alert("I am an alert box!");' data-id="{{ $item->id }}">Hapus</a>
+                            <button type="button" class="btn btn-primary btn-sm editsampah" data-toggle="modal" data-target="#modaledit" data-uuid="{{ $item->uuid }}">Edit</button>
+                            <a href="{{route('sampah')}}" type="button" class="btn btn-danger btn-sm deletesampah" onclick='alert("I am an alert box!");' data-id="{{ $item->id }}">Hapus</a>
                         </td>
                     </tr>
 
@@ -67,24 +61,18 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Add Kategori</h4>
+          <h4 class="modal-title">Add Sampah</h4>
         </div>
-        <form action="{{route('kategori.store')}}"  method="POST">
+        <form action="{{route('sampah.store')}}"  method="POST">
             @csrf
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="namaketegori">Nama Kategori</label>
-                    <input type="text" class="form-control" id="namaketegori" name="nama" placeholder="Nama Kategori" required>
+                    <label for="nama">Nama Sampah</label>
+                    <input type="text" class="form-control" name="nama" placeholder="Nama sampah" required>
                 </div>
                 <div class="form-group">
-                    <div class="form-group" >
-                        <label>Status</label>
-                        <select class="form-control" name="status" required>
-                            <option value="">Pilih Atatus</option>
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak Aktif</option>
-                        </select>
-                      </div>
+                    <label for="harga">Harga Sampah</label>
+                    <input type="text" class="form-control" name="harga" placeholder="Harga sampah" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -102,26 +90,20 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Edit Kategori</h4>
+          <h4 class="modal-title">Edit sampah</h4>
         </div>
-        <form action="{{route('kategori.update')}}"  method="POST">
+        <form action="{{route('sampah.update')}}"  method="POST">
             @csrf
             {{-- {{ method_field('PATCH') }} --}}
             <input type="hidden" value="" name="id" id="id">
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="namaketegori">Nama Kategori</label>
-                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Kategori" required>
+                    <label for="namaketegori">Nama sampah</label>
+                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama sampah" required>
                 </div>
                 <div class="form-group">
-                    <div class="form-group" >
-                        <label>Status</label>
-                        <select class="form-control" name="status" id="status" required>
-                            <option value="">Pilih Atatus</option>
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak Aktif</option>
-                        </select>
-                      </div>
+                    <label for="namaketegori">Harga Sampah</label>
+                    <input type="text" class="form-control" id="harga" name="harga" placeholder="Harga sampah" required>
                 </div>
             </div>
             <div class="modal-footer">
@@ -137,14 +119,14 @@
 @section('js')
 <script>
     $(function () {
-        $('#kategori-table').DataTable()
+        $('#sampah-table').DataTable()
       });
 
-      $('.editkategori').click( function(){
+      $('.editsampah').click( function(){
             var $uuid = $(this).attr('data-uuid');
             $.ajax({
             type: "POST",
-            url: "{{route('ajax_kategories')}}",
+            url: "{{route('ajax_sampah')}}",
             data: {
                 _token: '{{csrf_token()}}',
                 uuid: $uuid
@@ -153,18 +135,18 @@
             success: function (data) {
                     $('#id').val(data.id);
                     $('#nama').val(data.nama);
-                    $('#status').val(data.status);
+                    $('#harga').val(data.harga);
                 }
             });
         });
 
-        $('.deletekategori').click(function(){
+        $('.deletesampah').click(function(){
             var $id = $(this).attr('data-id');
             // console.log($id);
 
             $.ajax({
                 type: "POST",
-                url: "{{route('kategori.delete')}}",
+                url: "{{route('sampah.delete')}}",
                 data: {
                     _token: '{{csrf_token()}}',
                     id: $id
