@@ -32,7 +32,7 @@ class NasabahController extends Controller
             'ttl'  => $request->ttl,
             'address' => $request->alamat,
         ]);
-
+        Alert::success('Success', 'Data Tambahkan');
         return back();
     }
 
@@ -62,7 +62,7 @@ class NasabahController extends Controller
             'ttl'  => $request->ttl,
             'address' => $request->alamat,
         ]);
-
+        Alert::success('Success', 'Data Di Update');
         return back();
     }
 
@@ -70,6 +70,7 @@ class NasabahController extends Controller
     {
         $nasabah = user::where('id', $request->id)->first();
         $nasabah->delete();
+        Alert::success('Success', 'Berhasil Di hapus');
         return back();
         // return $nasabah;
     }

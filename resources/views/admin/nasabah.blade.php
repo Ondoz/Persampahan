@@ -1,6 +1,6 @@
 @extends('layouts.admin_layouts')
 @section('content')
-
+@include('sweetalert::alert')
 <div class="row">
     <div class="col-xs-12">
         <div class="box">

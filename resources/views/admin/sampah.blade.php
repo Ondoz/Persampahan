@@ -1,6 +1,6 @@
 @extends('layouts.admin_layouts')
 @section('content')
-
+@include('sweetalert::alert')
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -73,6 +73,13 @@
                 <div class="form-group">
                     <label for="harga">Harga Sampah</label>
                     <input type="text" class="form-control" name="harga" placeholder="Harga sampah" required>
+                </div>
+                <div class="form-group">
+                    <label for="harga">Satuan Sampah</label>
+                    <select name="satuan" id="" class="form-control">
+                        <option value="G(Gram)">G(Gram)</option>
+                        <option value="Kg(Kilogram)">Kilo(Gram)</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">

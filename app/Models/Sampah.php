@@ -16,7 +16,8 @@ class Sampah extends Model
         'uuid',
         'nama',
         'slug',
-        'harga'
+        'harga',
+        'satuan'
     ];
 
     public function getSlugOptions(): SlugOptions

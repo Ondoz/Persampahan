@@ -20,16 +20,6 @@
                     <i class="fa fa-laptop"></i> <span>Nasabah</span>
                 </a>
             </li>
-            <li class="{{request()->is('admin/kategori') ? 'active' : ''}}">
-                <a href="{{route('kategori')}}">
-                    <i class="fa fa-edit"></i><span>Kategori Sampah</span>
-                </a>
-            </li>
-            <li class="{{request()->is('admin/daerah') ? 'active' : ''}}">
-                <a href="{{route('daerah')}}">
-                    <i class="fa fa-home"></i> <span>Daerah </span>
-                </a>
-            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

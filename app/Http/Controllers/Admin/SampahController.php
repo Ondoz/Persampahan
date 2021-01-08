@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Sampah;
 use Illuminate\Http\Request;
+use Alert;
 
 class SampahController extends Controller
 {
@@ -16,17 +17,27 @@ class SampahController extends Controller
 
     public function store(Request $request)
     {
+
+
         $request->validate([
             'nama' => 'required',
             'harga' => 'required'
         ]);
 
-        Sampah::create([
-            'nama' => $request->nama,
-            'harga' => $request->harga
-        ]);
+        $sampah =  Sampah::where('nama', $request->nama)->exists();
 
-        return back();
+        if ($sampah) {
+            Alert::error('Error', 'Data Sudah Ada');
+            return back();
+        } else {
+            Sampah::create([
+                'nama' => $request->nama,
+                'harga' => $request->harga,
+                'satuan' => $request->satuan
+            ]);
+            Alert::success('Success', 'Data Tambahkan');
+            return back();
+        }
     }
 
     public function editajax(Request $request)
@@ -45,7 +56,8 @@ class SampahController extends Controller
 
         $sampah->update([
             'nama' => $request->nama,
-            'harga' => $request->harga
+            'harga' => $request->harga,
+            'satuan' => $request->satuan
         ]);
 
         return back();

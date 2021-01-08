@@ -8,6 +8,7 @@ use App\Models\DataTransaksiNasabah;
 use App\Models\Sampah;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Alert;
 
 class DataTransaksiController extends Controller
 {
@@ -60,7 +61,7 @@ class DataTransaksiController extends Controller
             false;
         }
 
-
+        Alert::success('Success', 'Data Tambahkan');
         return back();
     }
 
@@ -68,7 +69,7 @@ class DataTransaksiController extends Controller
     {
         $data = DataTransaksiNasabah::where('uuid', $request->uuid)->first();
         $data->delete();
-
+        Alert::success('Success', 'Data Dihapus');
         return back();
     }
 }
